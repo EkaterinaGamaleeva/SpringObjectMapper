@@ -46,17 +46,17 @@ public class CustomersController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid CustomerDTO customerDTO, BindingResult bindingResult) {
-     customerValidator.validate(customerToCustomer(customerDTO),bindingResult);
-        customersService.save(customerToCustomer(customerDTO));
+    public ResponseEntity<HttpStatus> create(@RequestBody @Valid Customer customer, BindingResult bindingResult) {
+     customerValidator.validate(customer,bindingResult);
+        customersService.save(customer);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity update(@RequestBody @Valid CustomerDTO customerDTO, BindingResult bindingResult,
+    public ResponseEntity update(@RequestBody @Valid Customer customer, BindingResult bindingResult,
                                  @PathVariable("id") int id) {
-        customerValidator.validate(customerToCustomer(customerDTO),bindingResult);
-        customersService.update(id, customerToCustomer(customerDTO));
+        customerValidator.validate(customer,bindingResult);
+        customersService.update(id, customer);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -69,9 +69,7 @@ public class CustomersController {
     public ResponseEntity<List<Order>> getOrders(@PathVariable("id") int id) {
         return new ResponseEntity<>(customersService.getOrdersByCustomerId(id),HttpStatus.OK);
     }
-    public Customer customerToCustomer(CustomerDTO customerDTO){
-        return  modelMapper.map(customerDTO,Customer.class);
-    }
+
     public CustomerDTO customerToCustomerDto(Customer customer){
         return  modelMapper.map(customer,CustomerDTO.class);
     }

@@ -44,16 +44,16 @@ public class OrdersController {
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid OrderDTO orderDTO)  {
-        ordersService.save(customerToOrder(orderDTO));
+    public ResponseEntity<HttpStatus> create(@RequestBody @Valid Order order)  {
+        ordersService.save(order);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 
     @PatchMapping("/{id}")
-    public ResponseEntity<HttpStatus> update(@RequestBody @Valid OrderDTO orderDTO,
+    public ResponseEntity<HttpStatus> update(@RequestBody @Valid Order order,
                                              @PathVariable("id") int id)  {
-        ordersService.update(id, customerToOrder(orderDTO));
+        ordersService.update(id,order);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
@@ -66,9 +66,7 @@ public class OrdersController {
     public ResponseEntity<List<Product>> getProducts(@PathVariable("id") int id) {
         return new ResponseEntity<>(ordersService.getProducts(id),HttpStatus.OK);
     }
-    public Order customerToOrder(OrderDTO orderDTO) {
-        return modelMapper.map(orderDTO,Order.class);
-    }
+
     public OrderDTO customerToOrderDto(Order order){
         return  modelMapper.map(order,OrderDTO.class);
     }

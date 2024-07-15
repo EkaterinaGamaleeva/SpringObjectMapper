@@ -60,9 +60,6 @@ public class ProductsController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    public Product customerToProductDto(ProductDTO productDTO){
-        return modelMapper.map(productDTO,Product.class);
-    }
     public ProductDTO customerToProductDto(Product product){
         return  modelMapper.map(product,ProductDTO.class);
     }
