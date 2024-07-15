@@ -41,15 +41,17 @@ public class ProductsController {
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid Product product) {
+    public ResponseEntity<HttpStatus> create(@RequestBody String s) {
+        Product product=modelMapper.map(s,Product.class);
         productsService.save(product);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 
     @PatchMapping("/{id}")
-    public ResponseEntity<HttpStatus> update(@RequestBody @Valid Product product,
+    public ResponseEntity<HttpStatus> update(@RequestBody String s,
                                              @PathVariable("id") int id) {
+        Product product=modelMapper.map(s,Product.class);
         productsService.update(id, product);
         return ResponseEntity.ok(HttpStatus.OK);
     }

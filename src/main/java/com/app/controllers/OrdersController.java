@@ -44,15 +44,17 @@ public class OrdersController {
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid Order order)  {
+    public ResponseEntity<HttpStatus> create(@RequestBody String s)  {
+       Order order= modelMapper.map(s,Order.class);
         ordersService.save(order);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 
     @PatchMapping("/{id}")
-    public ResponseEntity<HttpStatus> update(@RequestBody @Valid Order order,
+    public ResponseEntity<HttpStatus> update(@RequestBody String s,
                                              @PathVariable("id") int id)  {
+        Order order= modelMapper.map(s,Order.class);
         ordersService.update(id,order);
         return ResponseEntity.ok(HttpStatus.OK);
     }

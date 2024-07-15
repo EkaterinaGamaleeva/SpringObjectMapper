@@ -46,15 +46,17 @@ public class CustomersController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid Customer customer, BindingResult bindingResult) {
-     customerValidator.validate(customer,bindingResult);
+    public ResponseEntity<HttpStatus> create(@RequestBody String s, BindingResult bindingResult) {
+        Customer customer=modelMapper.map(s,Customer.class);
+        customerValidator.validate(customer,bindingResult);
         customersService.save(customer);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity update(@RequestBody @Valid Customer customer, BindingResult bindingResult,
+    public ResponseEntity update(@RequestBody @Valid String s, BindingResult bindingResult,
                                  @PathVariable("id") int id) {
+        Customer customer=modelMapper.map(s,Customer.class);
         customerValidator.validate(customer,bindingResult);
         customersService.update(id, customer);
         return new ResponseEntity<>(HttpStatus.OK);
